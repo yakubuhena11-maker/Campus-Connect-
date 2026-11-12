@@ -1,4 +1,4 @@
-const CACHE_NAME = 'campus-connect-v9';
+const CACHE_NAME = 'campus-connect-v10';
 const APP_SHELL = [
   './',
   './index.html',
@@ -20,14 +20,15 @@ const APP_SHELL = [
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
-    // Cache the shell opportunistically so a single missing optional asset cannot
-    // prevent the updated worker from installing.
+    // Install even if an optional shell request fails. CSS and JS are fetched
+    // network-first at runtime and cached only after successful responses.
     await Promise.all(APP_SHELL.map(async (path) => {
       try {
-        const response = await fetch(path);
-        if (response.ok) await cache.put(path, response);
+        const url = new URL(path, self.registration.scope);
+        const response = await fetch(url);
+        if (response.ok) await cache.put(url, response);
       } catch {
-        // Network may be unavailable during installation; the next request can retry.
+        // Retry on a subsequent request when the network is available.
       }
     }));
     await self.skipWaiting();
@@ -46,12 +47,8 @@ self.addEventListener('fetch', (event) => {
   const request = event.request;
   if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
 
-  const pathname = new URL(request.url).pathname;
-  const isCssOrJs = /\.(?:css|js)$/i.test(pathname);
-
-  if (isCssOrJs) {
-    // Always try the latest styles and scripts first. Use the cache only when
-    // offline, and refresh the cached copy after a successful network response.
+  const url = new URL(request.url);
+  if (/\.(?:css|js)$/i.test(url.pathname)) {
     event.respondWith((async () => {
       try {
         const response = await fetch(request);

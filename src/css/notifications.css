@@ -1,0 +1,32 @@
+@import url("https://raw.githubusercontent.com/yakubuhena11-maker/Campus-Connect-/86594ec30dac8088f7157593f17e790a5abde8c3/src/css/styles.css");
+
+:root { --primary: #123b70; --ink: #172b45; --muted: #5d7188; --line: #d9e7f4; --surface: #f2f8fd; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f6f9fc; color: var(--ink); font-family: system-ui, sans-serif; }
+.page-shell { width: min(920px, calc(100% - 32px)); margin: 32px auto; }
+.page-header, .section-heading, .notification-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.page-header { margin-bottom: 24px; }
+.brand { color: var(--primary); font-weight: 750; text-decoration: none; }
+.panel { padding: clamp(20px, 4vw, 36px); border: 1px solid var(--line); border-radius: 20px; background: #fff; box-shadow: 0 12px 35px rgb(18 59 112 / 7%); }
+h1 { margin: 4px 0 20px; color: var(--primary); }
+h2 { margin: 0 0 8px; font-size: 1.15rem; }
+.eyebrow, .type-label { color: var(--muted); font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.button, .bell-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 9px 14px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--primary); font: inherit; font-weight: 650; text-decoration: none; cursor: pointer; }
+.button.primary { border-color: var(--primary); background: var(--primary); color: #fff; }
+.button:disabled { opacity: .6; cursor: wait; }
+.count-badge { min-width: 22px; padding: 2px 6px; border-radius: 999px; background: #c53737; color: white; font-size: .75rem; text-align: center; }
+.notification-list { display: grid; gap: 12px; margin-top: 20px; }
+.notification-card { align-items: flex-start; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+.notification-card.is-unread { border-left: 4px solid #347fc2; background: #f5faff; }
+.notification-copy { min-width: 0; }
+.notification-copy h2, .notification-copy h3 { margin: 5px 0; }
+.notification-copy p { margin: 6px 0 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
+time, .read-label { color: var(--muted); font-size: .82rem; }
+.notice { margin: 16px 0; padding: 12px 14px; border-radius: 10px; background: #eef7ff; }
+.notice[data-type="error"] { background: #fff0ef; color: #8d2420; }
+.loading, .empty-state { color: var(--muted); }
+.announcement-form { display: grid; gap: 10px; margin: 22px 0 34px; }
+.announcement-form input, .announcement-form textarea { width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); font: inherit; }
+.announcement-form textarea { resize: vertical; }
+.text-link { color: var(--primary); }
+@media (max-width: 560px) { .page-shell { width: min(100% - 20px, 920px); margin: 12px auto; } .section-heading { align-items: flex-start; } .notification-card { flex-direction: column; } }

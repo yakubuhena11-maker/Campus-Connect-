@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Send a Campus Connect announcement." />
+  <title>Announcements — Campus Connect Admin</title>
+  <link rel="stylesheet" href="../src/css/notifications.css" />
+  <script type="module" src="announcements.js"></script>
+</head>
+<body>
+  <main class="page-shell">
+    <header class="page-header">
+      <a class="brand" href="dashboard.html">Campus Connect Admin</a>
+      <a class="text-link" href="dashboard.html">Admin dashboard</a>
+    </header>
+    <section class="panel" aria-labelledby="page-title">
+      <p class="eyebrow">ADMIN TOOLS</p><h1 id="page-title">Announcements</h1>
+      <p>Send a message to all student accounts. Broadcasts appear in each recipient’s notification list.</p>
+      <p id="notice" class="notice" role="status" aria-live="polite" hidden></p>
+      <form id="announcement-form" class="announcement-form">
+        <label for="announcement-title">Title</label>
+        <input id="announcement-title" name="title" maxlength="120" required />
+        <label for="announcement-message">Message</label>
+        <textarea id="announcement-message" name="message" rows="6" maxlength="3000" required></textarea>
+        <button class="button primary" type="submit">Send announcement</button>
+      </form>
+      <h2>Recent broadcasts</h2>
+      <div id="announcement-list" class="notification-list"><p class="loading">Loading announcements…</p></div>
+    </section>
+  </main>
+</body>
+</html>

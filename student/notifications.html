@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Campus Connect notifications." />
+  <title>Notifications — Campus Connect</title>
+  <link rel="stylesheet" href="../src/css/notifications.css" />
+  <script type="module" src="notifications.js"></script>
+</head>
+<body>
+  <main class="page-shell">
+    <header class="page-header">
+      <a class="brand" href="../index.html">Campus Connect</a>
+      <a class="bell-link" href="notifications.html" aria-label="Notifications, unread count">
+        <span aria-hidden="true">♢</span><span>Notifications</span><span id="unread-count" class="count-badge" aria-live="polite">0</span>
+      </a>
+    </header>
+    <section class="panel" aria-labelledby="page-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">YOUR ACCOUNT</p><h1 id="page-title">Notifications</h1></div>
+        <button id="mark-all-read" class="button secondary" type="button">Mark all as read</button>
+      </div>
+      <p id="notice" class="notice" role="status" aria-live="polite" hidden></p>
+      <div id="notification-list" class="notification-list" aria-live="polite"><p class="loading">Loading notifications…</p></div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,10 @@
+.lf-narrow { width: min(100% - 28px, 640px); }
+.lf-form { display: grid; gap: 16px; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.lf-form label { display: grid; gap: 7px; color: var(--primary); font-size: .92rem; font-weight: 700; }
+.lf-form input, .lf-form select, .lf-form textarea { width: 100%; min-height: 46px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); background: var(--bg); font: inherit; font-size: 1rem; font-weight: 400; }
+.lf-form textarea { resize: vertical; }
+.lf-form input[type="file"] { padding: 10px; }
+.lf-form small { color: var(--muted); font-size: .8rem; font-weight: 400; }
+.lf-note { margin: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; color: var(--muted); background: var(--accent-soft); font-size: .88rem; line-height: 1.5; }
+.lf-form-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+.lf-form-actions .button { min-height: 46px; }

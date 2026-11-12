@@ -1,0 +1,27 @@
+.lf-page { min-height: 100vh; background: var(--bg); color: var(--ink); }
+.lf-nav { width: min(100% - 28px, 1100px); min-height: 72px; margin-inline: auto; }
+.lf-shell { width: min(100% - 28px, 1100px); margin-inline: auto; padding-block: 28px 56px; }
+.lf-heading { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; margin-bottom: 20px; }
+.lf-heading .eyebrow { margin: 0 0 8px; color: var(--muted); font-size: .75rem; font-weight: 700; letter-spacing: .12em; }
+.lf-heading h1 { margin: 0; color: var(--primary); font-size: clamp(1.5rem, 6vw, 2.2rem); }
+.lf-message { margin: 0 0 16px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); line-height: 1.5; }
+.lf-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+.lf-tab { min-height: 44px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: var(--surface); font: inherit; font-weight: 600; cursor: pointer; }
+.lf-tab.is-active { color: var(--primary); background: var(--accent-soft); border-color: var(--accent-strong); }
+.lf-controls { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
+.lf-controls input, .lf-controls select { min-height: 46px; padding: 0 14px; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); background: var(--surface); font: inherit; font-size: 1rem; }
+.lf-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.lf-card { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; color: var(--ink); background: var(--surface); text-decoration: none; transition: border-color 160ms ease, transform 160ms ease; }
+.lf-card:hover, .lf-card:focus-visible { border-color: var(--accent-strong); transform: translateY(-2px); }
+.lf-photo { width: 100%; aspect-ratio: 16 / 10; display: grid; place-items: center; color: var(--muted); background: var(--accent-soft); font-size: 2rem; object-fit: cover; }
+.lf-card-body { display: grid; gap: 8px; padding: 16px; }
+.lf-card-title { margin: 0; color: var(--primary); font-size: 1.05rem; font-weight: 700; overflow-wrap: anywhere; }
+.lf-meta { margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.45; }
+.lf-badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.lf-badge { padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--primary); background: var(--accent-soft); font-size: .75rem; font-weight: 700; text-transform: capitalize; }
+.lf-empty { padding: 28px 16px; border: 1px dashed var(--line); border-radius: 16px; color: var(--muted); text-align: center; }
+@media (min-width: 620px) {
+  .lf-controls { grid-template-columns: 1fr 220px; }
+  .lf-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 960px) { .lf-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

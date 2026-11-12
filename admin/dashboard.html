@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#123b70" />
+  <meta name="description" content="Campus Connect administration dashboard." />
+  <title>Admin dashboard — Campus Connect</title>
+  <link rel="manifest" href="../manifest.webmanifest" />
+  <link rel="stylesheet" href="../src/css/styles.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <script type="module" src="dashboard.js"></script>
+</head>
+<body class="admin-page">
+  <a class="skip-link" href="#admin-main">Skip to dashboard</a>
+  <div class="admin-shell">
+    <aside class="admin-sidebar" aria-label="Admin navigation">
+      <a class="admin-brand" href="dashboard.html"><span class="brand-mark" aria-hidden="true">CC</span><span>Campus <b>Connect</b><small>ADMIN CONSOLE</small></span></a>
+      <nav class="admin-nav" id="admin-nav" aria-label="Dashboard sections">
+        <button class="nav-item is-active" data-view="overview" type="button"><span aria-hidden="true">⌂</span>Overview</button>
+        <button class="nav-item" data-view="users" type="button"><span aria-hidden="true">♙</span>Users</button>
+        <button class="nav-item" data-view="reports" type="button"><span aria-hidden="true">▤</span>Reports</button>
+        <button class="nav-item" data-view="audit" type="button"><span aria-hidden="true">◷</span>Audit log</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <label class="theme-label" for="theme-select">Appearance</label>
+        <select id="theme-select" aria-label="Choose theme">
+          <option value="ocean">Ocean</option><option value="light">Light</option><option value="midnight">Midnight</option><option value="forest">Forest</option>
+        </select>
+        <button class="button button-outline logout-button" type="button" data-logout>Log out</button>
+      </div>
+    </aside>
+
+    <main id="admin-main" class="admin-main">
+      <header class="topbar">
+        <div><p class="eyebrow">CAMPUS CONNECT / ADMIN</p><h1 id="page-title">Overview</h1></div>
+        <div class="admin-identity"><span class="avatar" id="admin-avatar">—</span><span id="admin-name">Loading…</span></div>
+      </header>
+      <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+      <section class="view is-visible" id="view-overview" aria-labelledby="page-title">
+        <div class="welcome-panel"><div><p class="eyebrow">ADMIN OVERVIEW</p><h2>Community at a glance</h2><p>Live totals from Campus Connect profiles.</p></div><span class="welcome-mark" aria-hidden="true">✦</span></div>
+        <div class="stats-grid" id="stats-grid" aria-live="polite"><p class="loading">Loading real profile counts…</p></div>
+        <div class="panel overview-note"><div><h2>Administration</h2><p>Review member accounts, monitor reports and inspect recorded admin activity.</p></div><button class="button button-primary" data-go="users" type="button">Manage users <span aria-hidden="true">→</span></button></div>
+      </section>
+
+      <section class="view" id="view-users" aria-labelledby="users-heading" hidden>
+        <div class="section-title"><div><p class="eyebrow">DIRECTORY</p><h2 id="users-heading">Users</h2></div><span class="result-count" id="user-count">—</span></div>
+        <div class="toolbar"><label class="search-box"><span aria-hidden="true">⌕</span><input id="user-search" type="search" placeholder="Search name, email or matric number" autocomplete="off" /></label><label class="filter-label">Status<select id="status-filter"><option value="all">All users</option><option value="active">Active</option><option value="muted">Muted</option><option value="suspended">Suspended</option></select></label><label class="filter-label">Role<select id="role-filter"><option value="all">All roles</option><option value="student">Student</option><option value="admin">Admin</option></select></label></div>
+        <div id="users-list" class="users-list" aria-live="polite"><p class="loading">Loading profiles…</p></div>
+        <section class="detail-panel panel" id="user-detail" hidden aria-labelledby="detail-heading">
+          <div class="detail-heading"><div><p class="eyebrow">ACCOUNT DETAILS</p><h2 id="detail-heading">User details</h2></div><button id="close-detail" class="icon-button" type="button" aria-label="Close user details">×</button></div>
+          <form id="profile-form" class="profile-form">
+            <input id="profile-id" type="hidden" />
+            <label>Full name<input id="profile-full-name" name="full_name" maxlength="100" required /></label>
+            <label>Matric number<input id="profile-matric" name="matric_number" maxlength="50" /></label>
+            <label>Email in profile<input id="profile-email" name="email" type="email" maxlength="254" /></label>
+            <label>Role<select id="profile-role" name="role"><option value="student">Student</option><option value="admin">Admin</option></select></label>
+            <button class="button button-primary" type="submit">Save profile changes</button>
+          </form>
+          <p class="email-note">Email here updates the profile record only; changing a Supabase Auth email requires an authenticated email-change flow.</p>
+          <div class="user-actions" id="user-actions"></div>
+        </section>
+      </section>
+
+      <section class="view" id="view-reports" aria-labelledby="reports-heading" hidden>
+        <div class="section-title"><div><p class="eyebrow">CAMPUS FEEDBACK</p><h2 id="reports-heading">Reports</h2></div></div>
+        <div class="reports-grid"><section class="panel"><h3>Lost and Found</h3><div id="lost-found-list" class="record-list"><p class="loading">Loading records…</p></div></section><section class="panel"><h3>Student Voice</h3><div id="voice-list" class="record-list"><p class="loading">Loading records…</p></div></section></div>
+      </section>
+
+      <section class="view" id="view-audit" aria-labelledby="audit-heading" hidden>
+        <div class="section-title"><div><p class="eyebrow">ACCOUNTABILITY</p><h2 id="audit-heading">Audit log</h2></div><button class="button button-outline" id="refresh-audit" type="button">Refresh</button></div>
+        <div class="panel table-panel"><div id="audit-list" class="audit-list"><p class="loading">Loading admin actions…</p></div></div>
+      </section>
+    </main>
+  </div>
+  <nav class="mobile-nav" aria-label="Dashboard sections">
+    <button class="is-active" data-view="overview" type="button"><span aria-hidden="true">⌂</span>Overview</button><button data-view="users" type="button"><span aria-hidden="true">♙</span>Users</button><button data-view="reports" type="button"><span aria-hidden="true">▤</span>Reports</button><button data-view="audit" type="button"><span aria-hidden="true">◷</span>Audit</button>
+  </nav>
+</body>
+</html>

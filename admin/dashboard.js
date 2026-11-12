@@ -163,6 +163,8 @@ function openUser(id) {
   const isSelf = user.id === state.admin.id;
   $('#profile-role').disabled = isSelf;
   $('#save-role').disabled = isSelf;
+  $('#delete-user').disabled = isSelf || user.role === 'admin' || !user.matric_number;
+  $('#delete-user').title = !user.matric_number ? 'A matric number is required to confirm deletion.' : '';
   $('#account-actions').replaceChildren();
 
   const addActionButton = (text, nextStatus, action) => {
@@ -200,6 +202,8 @@ function setActionPending(pending) {
   state.saving = pending;
   $('#profile-form button[type="submit"]').disabled = pending;
   $('#save-role').disabled = pending || state.selectedUser?.id === state.admin.id;
+  $('#delete-user').disabled = pending || state.selectedUser?.id === state.admin.id
+    || state.selectedUser?.role === 'admin' || !state.selectedUser?.matric_number;
   $('#account-actions').querySelectorAll('button').forEach((button) => {
     button.disabled = pending || state.selectedUser?.id === state.admin.id;
   });
@@ -226,6 +230,55 @@ async function updateUser(user, changes, action) {
     setActionPending(false);
   }
 }
+
+async function deleteUser() {
+  const user = state.selectedUser;
+  if (!user || state.saving) return;
+  if (user.id === state.admin.id || user.role === 'admin') {
+    showNotice('You cannot delete your own account or another admin account.', 'error');
+    return;
+  }
+  const matricNumber = String(user.matric_number || '').trim();
+  if (!matricNumber) {
+    showNotice('This user has no matric number, so deletion cannot be confirmed.', 'error');
+    return;
+  }
+  if (!window.confirm(`Permanently delete ${user.full_name || user.email || 'this user'}? This cannot be undone.`)) return;
+  const typedMatricNumber = window.prompt(`To confirm deletion, type this user's matric number exactly:\n\n${matricNumber}`);
+  if (typedMatricNumber === null || typedMatricNumber.trim() !== matricNumber) {
+    showNotice('Deletion cancelled: the matric number did not match.');
+    return;
+  }
+  if (!window.confirm('Final confirmation: delete this account and its profile now?')) return;
+
+  setActionPending(true);
+  try {
+    const { data, error } = await supabase.functions.invoke('delete-user', {
+      body: { userId: user.id }
+    });
+    if (error) {
+      let message = error.message || 'The deletion function returned an error.';
+      try {
+        const response = error.context instanceof Response ? await error.context.json() : null;
+        if (response?.error) message = response.error;
+      } catch {
+        // Keep the Functions client's readable error message.
+      }
+      throw new Error(message);
+    }
+    if (!data?.success) throw new Error(data?.error || 'The account could not be deleted.');
+    showNotice('User account deleted and recorded in the audit log.');
+    $('#user-detail').hidden = true;
+    state.selectedUser = null;
+    await Promise.all([loadUsers(), loadOverview(), loadAudit()]);
+  } catch (error) {
+    showNotice(error.message || 'Could not delete this account.', 'error');
+  } finally {
+    setActionPending(false);
+  }
+}
+
+$('#delete-user').addEventListener('click', deleteUser);
 
 $('#profile-form').addEventListener('submit', async (event) => {
   event.preventDefault();

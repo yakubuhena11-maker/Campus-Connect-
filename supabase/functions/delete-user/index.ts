@@ -26,7 +26,6 @@ Deno.serve(async (request: Request) => {
     return json(500, { error: 'The account deletion function is not configured.' });
   }
 
-  // Verify JWT with Auth, then query the caller's profile using their own JWT/RLS.
   const callerClient = createClient(supabaseUrl, anonKey, {
     global: { headers: { Authorization: `Bearer ${tokenMatch[1]}` } },
     auth: { persistSession: false, autoRefreshToken: false }
@@ -69,9 +68,6 @@ Deno.serve(async (request: Request) => {
   if (!target) return json(404, { error: 'The target account was not found.' });
   if (target.role === 'admin') return json(403, { error: 'Admin accounts cannot be deleted from this tool.' });
 
-  // Record intent before the destructive call. If deletion fails, the record is
-  // changed to a failure action. The FK becomes NULL on successful user deletion,
-  // while details retain the target ID for the audit trail.
   const { data: audit, error: auditError } = await serviceClient
     .from('audit_logs')
     .insert({

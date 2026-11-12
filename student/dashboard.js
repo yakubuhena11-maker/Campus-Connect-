@@ -59,14 +59,24 @@ logoutButton.addEventListener('click', async () => {
   }
 });
 
+const featurePages = {
+  'feature-student-voice': 'voice.html',
+  'feature-lost-found': 'lost-found.html'
+};
+
 document.querySelectorAll('[data-feature]').forEach((feature) => {
   feature.addEventListener('click', () => {
-    if (feature.id === 'feature-student-voice') {
-      window.location.href = 'voice.html';
+    const page = featurePages[feature.id];
+    if (page) {
+      window.location.href = page;
       return;
     }
     showStatus(`${feature.dataset.feature} — Coming soon.`);
   });
+});
+
+document.querySelectorAll('[data-dashboard-link="lost-found"]').forEach((link) => {
+  link.setAttribute('href', 'lost-found.html');
 });
 
 const dashboardLinks = [...document.querySelectorAll('[data-dashboard-link]')];

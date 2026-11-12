@@ -549,3 +549,4 @@ if (await requireAdmin()) {
   await Promise.all([loadOverview(), loadAudit()]);
   setView('overview');
 }
+import './lost-found-actions.js';

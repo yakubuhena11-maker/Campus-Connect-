@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#123b70" />
-    <meta name="description" content="Manage Campus Connect users and review administration activity." />
+    <meta name="description" content="Read-only administration dashboard for Campus Connect." />
     <title>Admin panel — Campus Connect</title>
     <link rel="manifest" href="../manifest.webmanifest" />
     <link rel="stylesheet" href="../src/css/styles.css" />
@@ -20,26 +20,21 @@
           <span class="brand-mark" aria-hidden="true">CC</span>
           <span>campus<span class="brand-light">connect</span></span>
         </a>
-        <div class="admin-account">
+        <div class="admin-identity">
           <span class="admin-avatar" id="admin-avatar" aria-label="Administrator initials">A</span>
-          <span class="admin-name" id="admin-name">Loading…</span>
+          <span id="admin-name">Loading…</span>
         </div>
-        <button class="button button-outline logout-button" type="button" data-logout>Log out</button>
+        <button class="button button-outline logout-button" type="button" id="logout-button">Log out</button>
       </nav>
     </header>
 
     <div class="admin-layout shell">
-      <aside class="admin-sidebar" aria-label="Admin menu">
+      <aside class="admin-sidebar" aria-label="Admin navigation">
         <p class="sidebar-label">ADMINISTRATION</p>
-        <nav class="admin-nav" aria-label="Admin sections">
+        <nav class="admin-nav" aria-label="Dashboard sections">
           <button class="nav-item is-active" data-view="overview" type="button"><span aria-hidden="true">⌂</span>Overview</button>
           <button class="nav-item" data-view="users" type="button"><span aria-hidden="true">♙</span>Users</button>
-          <button class="nav-item" data-view="audit" type="button"><span aria-hidden="true">◷</span>Audit log</button>
         </nav>
-        <div class="sidebar-theme">
-          <span class="sidebar-label">APPEARANCE</span>
-          <div class="theme-host" aria-label="Theme picker"></div>
-        </div>
       </aside>
 
       <main id="admin-main" class="admin-main">
@@ -56,7 +51,7 @@
           <div class="welcome-panel">
             <p class="eyebrow">LIVE COMMUNITY DATA</p>
             <h2>Community at a glance</h2>
-            <p>Current account totals from student profiles.</p>
+            <p>Current totals from student profiles.</p>
           </div>
           <div class="stats-grid" id="stats-grid" aria-live="polite">
             <p class="loading">Loading profile totals…</p>
@@ -69,9 +64,9 @@
             <span class="result-count" id="user-count">—</span>
           </div>
           <div class="user-filters">
-            <label class="search-label" for="user-search">Search users</label>
+            <label for="user-search">Search users</label>
             <input id="user-search" type="search" placeholder="Name, email or matric number" autocomplete="off" />
-            <label class="status-label" for="status-filter">Status</label>
+            <label for="status-filter">Status</label>
             <select id="status-filter">
               <option value="all">All statuses</option>
               <option value="active">Active</option>
@@ -79,47 +74,16 @@
               <option value="suspended">Suspended</option>
             </select>
           </div>
-          <div class="users-list" id="users-list" aria-live="polite"><p class="loading">Loading users…</p></div>
-          <section class="user-detail panel" id="user-detail" hidden aria-labelledby="detail-heading">
-            <div class="detail-heading">
-              <div><p class="eyebrow">ACCOUNT DETAILS</p><h2 id="detail-heading">User details</h2></div>
-              <button class="button button-outline close-detail" id="close-detail" type="button">Close</button>
-            </div>
-            <p class="detail-email" id="detail-email"></p>
-            <form id="profile-form" class="profile-form">
-              <label for="profile-full-name">Full name</label>
-              <input id="profile-full-name" name="full_name" maxlength="100" required />
-              <label for="profile-matric">Matric number</label>
-              <input id="profile-matric" name="matric_number" maxlength="50" />
-              <button class="button button-primary" type="submit">Save profile details</button>
-            </form>
-            <div class="role-control">
-              <label for="profile-role">Role</label>
-              <select id="profile-role">
-                <option value="student">Student</option>
-                <option value="admin">Admin</option>
-              </select>
-              <button class="button button-outline" id="save-role" type="button">Update role</button>
-            </div>
-            <div class="account-actions" id="account-actions" aria-label="Account status actions"></div>
-            <p class="detail-hint">Changes are protected by Supabase Row Level Security and recorded in the audit log.</p>
-          </section>
-        </section>
-
-        <section class="admin-view" id="view-audit" aria-labelledby="audit-heading" hidden>
-          <div class="section-heading">
-            <div><p class="eyebrow">ACCOUNTABILITY</p><h2 id="audit-heading">Audit log</h2></div>
-            <button class="button button-outline" id="refresh-audit" type="button">Refresh</button>
+          <div class="users-list" id="users-list" aria-live="polite">
+            <p class="loading">Loading users…</p>
           </div>
-          <div class="audit-list panel" id="audit-list" aria-live="polite"><p class="loading">Loading admin actions…</p></div>
         </section>
       </main>
     </div>
 
-    <nav class="mobile-nav" aria-label="Admin sections">
+    <nav class="mobile-nav" aria-label="Admin dashboard sections">
       <button class="is-active" data-view="overview" type="button"><span aria-hidden="true">⌂</span>Overview</button>
       <button data-view="users" type="button"><span aria-hidden="true">♙</span>Users</button>
-      <button data-view="audit" type="button"><span aria-hidden="true">◷</span>Audit log</button>
     </nav>
   </body>
 </html>

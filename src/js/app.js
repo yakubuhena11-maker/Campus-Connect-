@@ -1,5 +1,6 @@
 // Campus Connect client-side entry point.
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase-config.js';
+import './theme.js';
 
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');

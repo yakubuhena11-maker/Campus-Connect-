@@ -78,6 +78,153 @@ h1 span, .section-heading h2 span, .community h2 span,
 .button-light:hover { background-color: var(--surface); }
 .site-footer { border-color: var(--line); }
 
+/* Theme palettes. Picker controls below consume these tokens rather than
+   embedding colors in their component styles. */
+:root,
+:root[data-theme="ocean"] {
+  color-scheme: light;
+  --primary: #123b70;
+  --primary-dark: #0b2a52;
+  --accent: #b9ddfc;
+  --accent-strong: #5798d1;
+  --bg: #ffffff;
+  --surface: #f2f8fd;
+  --ink: #172b45;
+  --muted: #5d7188;
+  --line: #d9e7f4;
+  --accent-soft: #eaf5ff;
+  --theme-swatch: var(--primary);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --primary: #4a5568;
+  --primary-dark: #2d3748;
+  --accent: #e2e8f0;
+  --accent-strong: #718096;
+  --bg: #ffffff;
+  --surface: #f7fafc;
+  --ink: #1a202c;
+  --muted: #4a5568;
+  --line: #cbd5e0;
+  --accent-soft: #edf2f7;
+  --theme-swatch: var(--muted);
+}
+:root[data-theme="midnight"] {
+  color-scheme: dark;
+  --primary: #a9c8ff;
+  --primary-dark: #8db4f5;
+  --accent: #263b5c;
+  --accent-strong: #91b7f4;
+  --bg: #111827;
+  --surface: #1f2937;
+  --ink: #e5edf8;
+  --muted: #b1bfd2;
+  --line: #3a4a60;
+  --accent-soft: #1c2a3e;
+  --theme-swatch: var(--bg);
+}
+:root[data-theme="forest"] {
+  color-scheme: light;
+  --primary: #285943;
+  --primary-dark: #194430;
+  --accent: #d1e8d8;
+  --accent-strong: #4e8b68;
+  --bg: #fbfdfb;
+  --surface: #eff6f0;
+  --ink: #1f3528;
+  --muted: #577260;
+  --line: #d3e2d6;
+  --accent-soft: #e8f2ea;
+  --theme-swatch: var(--primary);
+}
+
+/* Navigation theme picker: comfortable touch targets and a compact mobile menu. */
+.theme-picker {
+  position: relative;
+  z-index: 20;
+  flex: 0 0 auto;
+}
+.theme-picker-trigger,
+.theme-picker-option {
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--ink);
+  background: var(--surface);
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-picker-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+}
+.theme-picker-trigger:hover,
+.theme-picker-option:hover { background: var(--accent-soft); }
+.theme-picker-trigger:focus-visible,
+.theme-picker-option:focus-visible {
+  outline: 3px solid var(--accent-strong);
+  outline-offset: 2px;
+}
+.theme-picker-trigger-swatch,
+.theme-picker-swatch {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: var(--theme-swatch, var(--primary));
+}
+.theme-picker-trigger-swatch[data-theme="ocean"] { --theme-swatch: #123b70; }
+.theme-picker-trigger-swatch[data-theme="light"] { --theme-swatch: #718096; }
+.theme-picker-trigger-swatch[data-theme="midnight"] { --theme-swatch: #111827; }
+.theme-picker-trigger-swatch[data-theme="forest"] { --theme-swatch: #285943; }
+.theme-picker-chevron { color: var(--muted); }
+.theme-picker-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(220px, calc(100vw - 24px));
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--ink) 18%, transparent);
+}
+.theme-picker-menu[hidden] { display: none; }
+.theme-picker-option {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  border-color: transparent;
+  border-radius: 10px;
+  background: transparent;
+  text-align: left;
+}
+.theme-picker-option[aria-pressed="true"] {
+  border-color: var(--line);
+  background: var(--accent-soft);
+  font-weight: 700;
+}
+.theme-picker-check {
+  margin-left: auto;
+  color: var(--primary);
+  opacity: 0;
+}
+.theme-picker-option[aria-pressed="true"] .theme-picker-check { opacity: 1; }
+.theme-picker-option[data-theme-option="ocean"] .theme-picker-swatch { --theme-swatch: #123b70; }
+.theme-picker-option[data-theme-option="light"] .theme-picker-swatch { --theme-swatch: #718096; }
+.theme-picker-option[data-theme-option="midnight"] .theme-picker-swatch { --theme-swatch: #111827; }
+.theme-picker-option[data-theme-option="forest"] .theme-picker-swatch { --theme-swatch: #285943; }
+
 @media (max-width: 560px) {
   .nav-links { background-color: var(--bg); }
+  .theme-picker-menu { position: fixed; top: auto; right: 12px; margin-top: 8px; }
+  .theme-picker-trigger { padding-inline: 10px; }
 }

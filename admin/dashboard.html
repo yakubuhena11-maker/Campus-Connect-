@@ -9,8 +9,10 @@
     <link rel="manifest" href="../manifest.webmanifest" />
     <link rel="stylesheet" href="../src/css/styles.css" />
     <link rel="stylesheet" href="dashboard.css" />
+    <link rel="stylesheet" href="voice-admin.css" />
     <script type="module" src="../src/js/theme.js"></script>
     <script type="module" src="dashboard.js"></script>
+    <script type="module" src="voice-admin.js"></script>
   </head>
   <body class="admin-page">
     <a class="skip-link" href="#admin-main">Skip to admin panel</a>
@@ -35,6 +37,7 @@
           <button class="nav-item is-active" data-view="overview" type="button"><span aria-hidden="true">⌂</span>Overview</button>
           <button class="nav-item" data-view="users" type="button"><span aria-hidden="true">♙</span>Users</button>
           <button class="nav-item" data-view="lost-found" type="button"><span aria-hidden="true">⌕</span>Lost and Found</button>
+          <button class="nav-item" data-view="student-voice" type="button"><span aria-hidden="true">✎</span>Student Voice</button>
           <button class="nav-item" data-view="audit" type="button"><span aria-hidden="true">◷</span>Audit log</button>
         </nav>
       </aside>
@@ -123,6 +126,19 @@
           </section>
         </section>
 
+        <section class="admin-view" id="view-student-voice" aria-labelledby="voice-heading" hidden>
+          <div class="section-heading">
+            <div><p class="eyebrow">COMMUNITY MODERATION</p><h2 id="voice-heading">Student Voice</h2></div>
+            <button class="button button-outline" id="refresh-voice" type="button">Refresh</button>
+          </div>
+          <div class="voice-admin-filters" aria-label="Filter Student Voice posts">
+            <label>Status<select id="voice-status-filter"><option value="all">All statuses</option><option value="received">Received</option><option value="reviewing">Under review</option><option value="resolved">Resolved</option></select></label>
+            <label>Category<select id="voice-category-filter"><option value="all">All categories</option><option value="complaint">Complaint</option><option value="problem">Problem</option><option value="suggestion">Suggestion</option></select></label>
+            <span id="voice-result-count" class="result-count" aria-live="polite"></span>
+          </div>
+          <div id="voice-admin-list" class="voice-admin-list" aria-live="polite"><p class="loading">Student Voice posts load when you open this tab.</p></div>
+        </section>
+
         <section class="admin-view" id="view-audit" aria-labelledby="audit-heading" hidden>
           <div class="section-heading">
             <div><p class="eyebrow">ACCOUNTABILITY</p><h2 id="audit-heading">Audit log</h2></div>
@@ -137,6 +153,7 @@
       <button class="is-active" data-view="overview" type="button"><span aria-hidden="true">⌂</span>Overview</button>
       <button data-view="users" type="button"><span aria-hidden="true">♙</span>Users</button>
       <button data-view="lost-found" type="button"><span aria-hidden="true">⌕</span>Lost and Found</button>
+      <button data-view="student-voice" type="button"><span aria-hidden="true">✎</span>Student Voice</button>
       <button data-view="audit" type="button"><span aria-hidden="true">◷</span>Audit log</button>
     </nav>
   </body>

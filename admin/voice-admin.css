@@ -1,0 +1,33 @@
+ .voice-admin-filters { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin-bottom: 14px; padding: 14px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); }
+.voice-admin-filters label, .voice-admin-actions label { display: grid; gap: 5px; color: var(--muted); font-size: .78rem; font-weight: 700; }
+.voice-admin-filters select, .voice-admin-actions select, .voice-admin-actions input, .voice-admin-actions textarea { width: 100%; min-width: 0; min-height: 43px; padding: 9px 11px; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); background: var(--bg); font: inherit; }
+.voice-admin-actions textarea { resize: vertical; }
+.voice-admin-filters select:focus, .voice-admin-actions select:focus, .voice-admin-actions input:focus, .voice-admin-actions textarea:focus { outline: 3px solid var(--accent-strong); outline-offset: 2px; }
+.voice-admin-list { display: grid; gap: 13px; }
+.voice-admin-card { min-width: 0; padding: 15px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); }
+.voice-admin-card-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 9px; }
+.voice-admin-card-head > div { display: flex; flex-wrap: wrap; gap: 6px; }
+.voice-admin-card-head time { color: var(--muted); font-size: .72rem; }
+.voice-admin-badge, .voice-admin-status, .voice-admin-hidden { display: inline-flex; align-items: center; padding: 4px 8px; border: 1px solid var(--line); border-radius: 999px; color: var(--primary); background: var(--accent-soft); font-size: .68rem; font-weight: 800; }
+.voice-admin-status { color: var(--muted); background: var(--surface); }
+.voice-admin-hidden { color: var(--ink); background: var(--surface); }
+.voice-admin-card h3 { margin: 13px 0 6px; color: var(--primary); font-size: 1.08rem; overflow-wrap: anywhere; }
+.voice-admin-message { margin: 0; color: var(--ink); font-size: .84rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.voice-admin-author { margin: 12px 0 15px; color: var(--muted); font-size: .77rem; overflow-wrap: anywhere; }
+.voice-admin-author strong { color: var(--ink); }
+.voice-admin-actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 9px; padding-top: 13px; border-top: 1px solid var(--line); }
+.voice-admin-actions .button { min-height: 43px; width: 100%; padding: 8px 11px; }
+.voice-admin-actions .button:disabled { opacity: .58; cursor: not-allowed; }
+.voice-admin-actions .voice-note-label, .voice-admin-actions .voice-reply-label { grid-column: 1 / -1; }
+.mobile-nav { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.mobile-nav button { padding-inline: 2px; font-size: .66rem; }
+@media (min-width: 620px) {
+  .voice-admin-filters { grid-template-columns: repeat(2, minmax(0, 1fr)) auto; align-items: end; }
+  .voice-admin-card { padding: 19px; }
+  .voice-admin-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; }
+  .voice-admin-actions > .button { width: auto; }
+  .voice-admin-actions .voice-reply-label { grid-column: 1 / -1; }
+}
+@media (min-width: 900px) {
+  .admin-nav { gap: 5px; }
+}

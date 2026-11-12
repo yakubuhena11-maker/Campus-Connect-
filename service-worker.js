@@ -1,4 +1,4 @@
-const CACHE_NAME = 'campus-connect-v5';
+const CACHE_NAME = 'campus-connect-v6';
 const APP_SHELL = [
   './',
   './index.html',

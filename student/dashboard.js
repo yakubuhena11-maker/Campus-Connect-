@@ -3,6 +3,7 @@ import { supabase, isSupabaseConfigured } from '../src/js/supabase-client.js';
 const nameElement = document.querySelector('#student-name');
 const headerNameElement = document.querySelector('#header-student-name');
 const avatarElement = document.querySelector('#student-avatar');
+const adminLink = document.querySelector('#admin-panel-link');
 const statusElement = document.querySelector('#dashboard-status');
 const logoutButton = document.querySelector('#logout-button');
 
@@ -33,6 +34,14 @@ async function initializeDashboard() {
     headerNameElement.textContent = fullName;
     avatarElement.textContent = getInitials(fullName);
     avatarElement.setAttribute('aria-label', `${getInitials(fullName)} profile initials`);
+
+    const { data: profile, error: profileError } = await supabase.from('profiles')
+      .select('role').eq('id', session.user.id).maybeSingle();
+    if (profileError) {
+      showStatus(`Could not load your profile: ${profileError.message}`);
+      return;
+    }
+    adminLink.hidden = profile?.role !== 'admin';
   } catch {
     window.location.replace('../auth.html#login');
   }
@@ -52,8 +61,7 @@ logoutButton.addEventListener('click', async () => {
 
 document.querySelectorAll('[data-feature]').forEach((feature) => {
   feature.addEventListener('click', () => {
-    const featureName = feature.dataset.feature;
-    showStatus(`${featureName} — Coming soon.`);
+    showStatus(`${feature.dataset.feature} — Coming soon.`);
   });
 });
 

@@ -1,8 +1,11 @@
-const CACHE_NAME = 'campus-connect-v6';
+const CACHE_NAME = 'campus-connect-v7';
 const APP_SHELL = [
   './',
   './index.html',
   './auth.html',
+  './student/dashboard.html',
+  './student/dashboard.css',
+  './student/dashboard.js',
   './manifest.webmanifest',
   './src/css/styles.css',
   './src/css/auth.css',

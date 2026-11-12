@@ -1,0 +1,70 @@
+ .student-page {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.student-nav {
+  width: min(100% - 28px, 1120px);
+  min-height: 72px;
+  margin-inline: auto;
+}
+
+.logout-button {
+  min-height: 44px;
+}
+
+.student-main {
+  width: min(100% - 28px, 860px);
+  margin-inline: auto;
+  padding-block: 36px 64px;
+}
+
+.welcome-card {
+  padding: 28px 22px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface);
+}
+
+.welcome-card .eyebrow {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.welcome-card h1 {
+  margin: 0;
+  color: var(--primary);
+  font-size: clamp(1.8rem, 8vw, 2.8rem);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.welcome-copy {
+  max-width: 52ch;
+  margin: 16px 0 0;
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+.dashboard-status {
+  margin: 20px 0 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+@media (min-width: 700px) {
+  .student-main {
+    padding-block: 64px 96px;
+  }
+
+  .welcome-card {
+    padding: 48px;
+  }
+}

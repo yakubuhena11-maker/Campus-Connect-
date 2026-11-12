@@ -121,7 +121,7 @@ forms.login.addEventListener('submit', async (event) => {
       password: form.elements.password.value
     });
     if (error) throw error;
-    showStatus('Signed in successfully. Authentication has responded, but no student dashboard is connected yet.', 'success');
+    window.location.replace('./student/dashboard.html');
   } catch (error) {
     showStatus(error.message || 'Login failed. Check your details and Supabase Auth settings.', 'error');
   } finally {

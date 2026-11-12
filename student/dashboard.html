@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#123b70" />
+    <meta name="description" content="Your Campus Connect student dashboard." />
+    <title>Student dashboard — Campus Connect</title>
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <link rel="stylesheet" href="../src/css/styles.css" />
+    <link rel="stylesheet" href="dashboard.css" />
+    <script type="module" src="../src/js/theme.js"></script>
+    <script type="module" src="dashboard.js"></script>
+  </head>
+  <body class="student-page">
+    <a class="skip-link" href="#student-main">Skip to dashboard</a>
+    <header class="site-header">
+      <nav class="nav student-nav" aria-label="Main navigation">
+        <a class="brand" href="../index.html" aria-label="Campus Connect home">
+          <span class="brand-mark" aria-hidden="true">CC</span>
+          <span>campus<span class="brand-light">connect</span></span>
+        </a>
+        <button class="button button-outline logout-button" id="logout-button" type="button">Log out</button>
+      </nav>
+    </header>
+    <main id="student-main" class="student-main">
+      <section class="welcome-card" aria-labelledby="welcome-heading">
+        <p class="eyebrow">STUDENT DASHBOARD</p>
+        <h1 id="welcome-heading">Welcome, <span id="student-name">student</span></h1>
+        <p class="welcome-copy">You’re signed in to Campus Connect. Your campus community is just getting started.</p>
+        <p id="dashboard-status" class="dashboard-status" role="status" aria-live="polite" hidden></p>
+      </section>
+    </main>
+  </body>
+</html>

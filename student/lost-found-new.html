@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#123b70" />
+    <title>Report an item — Campus Connect</title>
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <link rel="stylesheet" href="../src/css/styles.css" />
+    <link rel="stylesheet" href="lost-found.css" />
+    <link rel="stylesheet" href="lost-found-new.css" />
+    <script type="module" src="../src/js/theme.js"></script>
+    <script type="module" src="lost-found-new.js"></script>
+  </head>
+  <body class="lf-page">
+    <header class="site-header"><nav class="nav lf-nav" aria-label="Main navigation">
+      <a class="brand" href="dashboard.html" aria-label="Campus Connect dashboard"><span class="brand-mark" aria-hidden="true">CC</span><span>campus<span class="brand-light">connect</span></span></a>
+      <a class="button button-outline" href="lost-found.html">Back</a>
+    </nav></header>
+    <main class="lf-shell lf-narrow">
+      <div class="lf-heading"><div><p class="eyebrow">LOST AND FOUND</p><h1>Report an item</h1></div></div>
+      <p class="lf-message" id="lf-message" role="status" aria-live="polite" hidden></p>
+      <form class="lf-form" id="lf-form" novalidate>
+        <label>Did you lose it or find it?
+          <select name="type" required>
+            <option value="" disabled selected>Select one</option>
+            <option value="lost">I lost something</option>
+            <option value="found">I found something</option>
+          </select>
+        </label>
+        <label>Title
+          <input name="title" type="text" minlength="3" maxlength="100" required placeholder="e.g. Black backpack" />
+        </label>
+        <label>Description
+          <textarea name="description" rows="5" maxlength="1000" required placeholder="Colour, brand, marks, anything that helps identify it"></textarea>
+        </label>
+        <label>Category
+          <select name="category" required>
+            <option value="" disabled selected>Select a category</option>
+            <option value="electronics">Electronics</option>
+            <option value="documents">Documents and ID</option>
+            <option value="bags">Bags</option>
+            <option value="clothing">Clothing</option>
+            <option value="keys">Keys</option>
+            <option value="books">Books</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+        <label>Location
+          <input name="location" type="text" maxlength="120" required placeholder="Where was it lost or found?" />
+        </label>
+        <label>Date
+          <input name="date_occurred" id="lf-date" type="date" required />
+        </label>
+        <label>Photo (optional)
+          <input name="photo" id="lf-photo" type="file" accept="image/jpeg,image/png,image/webp" />
+          <small>JPEG, PNG or WebP, up to 3 MB.</small>
+        </label>
+        <p class="lf-note">An admin must approve your report before other students can see it.</p>
+        <div class="lf-form-actions">
+          <a class="button button-outline" href="lost-found.html">Cancel</a>
+          <button class="button button-primary" type="submit" id="lf-submit">Submit report</button>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>

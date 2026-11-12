@@ -4,50 +4,56 @@ const form = document.querySelector('#lf-form');
 const msgEl = document.querySelector('#lf-message');
 const submitBtn = document.querySelector('#lf-submit');
 const dateEl = document.querySelector('#lf-date');
-
 const MAX_BYTES = 3 * 1024 * 1024;
 const TYPES = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
-
 let userId = null;
 
 function showMessage(text, isError = true) {
-  if (!msgEl) { alert(text); return; }
+  if (!msgEl) return;
   msgEl.textContent = text || '';
   msgEl.hidden = !text;
-  msgEl.style.borderColor = isError ? 'var(--accent-strong)' : 'var(--line)';
+  msgEl.dataset.kind = isError ? 'error' : 'success';
   if (text) msgEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-window.addEventListener('error', (e) => showMessage('Script error: ' + e.message));
-window.addEventListener('unhandledrejection', (e) => showMessage('Error: ' + (e.reason?.message || e.reason)));
-
-if (!form || !msgEl || !submitBtn || !dateEl) {
-  alert('The page is missing an element. Check that lost-found-new.html has the ids lf-form, lf-message, lf-submit and lf-date.');
+function describeUploadError(error) {
+  const message = error?.message || String(error || 'Unknown storage error');
+  if (/failed to fetch|networkerror|load failed/i.test(message)) {
+    return 'Photo upload could not reach Supabase Storage. Check your internet connection and Supabase project URL, then confirm migration 006b_storage_fix.sql has been run.';
+  }
+  if (/row-level security|permission|not authorized|unauthorized|403/i.test(message)) {
+    return 'Supabase rejected the photo upload. Confirm the lost-found bucket policies are installed and that you are signed in.';
+  }
+  if (/bucket not found|not found/i.test(message)) {
+    return 'The lost-found storage bucket is missing. Run database/migrations/006b_storage_fix.sql in the Supabase SQL Editor.';
+  }
+  if (/payload too large|file size|exceeded/i.test(message)) {
+    return 'The photo exceeds the 3 MB storage limit. Choose a smaller image.';
+  }
+  return `Photo upload failed: ${message}`;
 }
-
-showMessage('Step 1: script loaded.', false);
 
 async function init() {
   if (!isSupabaseConfigured || !supabase) {
-    showMessage('Supabase is not configured.');
+    showMessage('Supabase is not configured. Contact your campus administrator.');
     return;
   }
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { session }, error } = await supabase.auth.getSession();
+  if (error) {
+    showMessage(`Could not check your sign-in: ${error.message}`);
+    return;
+  }
   if (!session) {
     window.location.replace('../auth.html#login');
     return;
   }
   userId = session.user.id;
-  if (dateEl) dateEl.max = new Date().toISOString().slice(0, 10);
-  showMessage('Step 2: logged in. Fill in the form and tap Submit.', false);
+  dateEl.max = new Date().toISOString().slice(0, 10);
 }
-
-submitBtn?.addEventListener('click', () => showMessage('Step 3: Submit tapped.', false));
 
 form?.addEventListener('submit', async (event) => {
   event.preventDefault();
-
-  if (!userId) return showMessage('Still loading your account. Wait a moment and try again.');
+  if (!userId) return showMessage('Your account is still loading. Wait a moment and try again.');
 
   const fd = new FormData(form);
   const type = fd.get('type');
@@ -58,52 +64,42 @@ form?.addEventListener('submit', async (event) => {
   const date = fd.get('date_occurred');
   const photo = fd.get('photo');
 
-  if (!type || !category) return showMessage('Please choose the type and the category.');
+  if (!type || !category) return showMessage('Please choose the item type and category.');
   if (title.length < 3) return showMessage('Please enter a title of at least 3 characters.');
   if (!description) return showMessage('Please add a description.');
   if (!location) return showMessage('Please enter the location.');
   if (!date) return showMessage('Please choose a date.');
 
   const hasPhoto = photo instanceof File && photo.size > 0;
-  if (hasPhoto) {
-    if (!TYPES[photo.type]) return showMessage('The photo must be a JPEG, PNG or WebP image.');
-    if (photo.size > MAX_BYTES) return showMessage('The photo must be 3 MB or smaller.');
-  }
+  if (hasPhoto && !TYPES[photo.type]) return showMessage('Choose a JPEG, PNG or WebP image.');
+  if (hasPhoto && photo.size > MAX_BYTES) return showMessage('The photo must be 3 MB or smaller.');
 
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Submitting...';
-
+  submitBtn.textContent = 'Submitting…';
+  showMessage('Submitting your report…', false);
   try {
     let imagePath = null;
     if (hasPhoto) {
       imagePath = `${userId}/${crypto.randomUUID()}.${TYPES[photo.type]}`;
-      const { error: uploadError } = await supabase.storage
-        .from('lost-found')
+      const { error: uploadError } = await supabase.storage.from('lost-found')
         .upload(imagePath, photo, { contentType: photo.type, upsert: false });
-      if (uploadError) throw new Error(`Photo upload failed: ${uploadError.message}`);
+      if (uploadError) throw new Error(describeUploadError(uploadError));
     }
 
     const { error } = await supabase.from('lost_found_items').insert({
-      owner_id: userId,
-      type,
-      title,
-      description,
-      category,
-      location,
-      date_occurred: date,
-      image_path: imagePath,
-      status: 'pending'
+      owner_id: userId, type, title, description, category, location,
+      date_occurred: date, image_path: imagePath, status: 'pending'
     });
-    if (error) throw new Error(error.message);
+    if (error) throw new Error(`Report could not be saved: ${error.message}`);
 
     form.reset();
     showMessage('Report submitted. An admin will review it before it is published.', false);
     setTimeout(() => window.location.assign('lost-found.html'), 2500);
   } catch (error) {
-    showMessage(error.message || 'Something went wrong. Please try again.');
+    showMessage(error.message || 'Could not submit the report. Check your connection and try again.');
     submitBtn.disabled = false;
     submitBtn.textContent = 'Submit report';
   }
 });
 
-init();
+init().catch((error) => showMessage(`Could not initialize the report form: ${error.message || error}`));

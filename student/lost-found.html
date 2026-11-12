@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#123b70" />
+    <title>Lost and Found — Campus Connect</title>
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <link rel="stylesheet" href="../src/css/styles.css" />
+    <link rel="stylesheet" href="lost-found.css" />
+    <script type="module" src="../src/js/theme.js"></script>
+    <script type="module" src="lost-found.js"></script>
+  </head>
+  <body class="lf-page">
+    <header class="site-header"><nav class="nav lf-nav" aria-label="Main navigation">
+      <a class="brand" href="dashboard.html" aria-label="Campus Connect dashboard"><span class="brand-mark" aria-hidden="true">CC</span><span>campus<span class="brand-light">connect</span></span></a>
+      <a class="button button-outline" href="dashboard.html">Dashboard</a>
+    </nav></header>
+    <main class="lf-shell">
+      <div class="lf-heading">
+        <div><p class="eyebrow">LOST AND FOUND</p><h1>Find it or report it</h1></div>
+        <a class="button button-primary" href="lost-found-new.html">Report an item</a>
+      </div>
+      <p class="lf-message" id="lf-message" role="status" aria-live="polite" hidden></p>
+      <div class="lf-tabs" role="tablist">
+        <button class="lf-tab is-active" type="button" data-tab="all">All items</button>
+        <button class="lf-tab" type="button" data-tab="mine">My items</button>
+      </div>
+      <div class="lf-controls">
+        <input id="lf-search" type="search" placeholder="Search items" aria-label="Search items" />
+        <select id="lf-type" aria-label="Filter by type">
+          <option value="">Lost and found</option>
+          <option value="lost">Lost</option>
+          <option value="found">Found</option>
+        </select>
+      </div>
+      <div class="lf-list" id="lf-list"></div>
+    </main>
+  </body>
+</html>

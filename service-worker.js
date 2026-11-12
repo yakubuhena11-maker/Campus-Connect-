@@ -1,4 +1,4 @@
-const CACHE_NAME = 'campus-connect-v10';
+const CACHE_NAME = 'campus-connect-v11';
 const APP_SHELL = [
   './',
   './index.html',
@@ -20,15 +20,13 @@ const APP_SHELL = [
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
-    // Install even if an optional shell request fails. CSS and JS are fetched
-    // network-first at runtime and cached only after successful responses.
     await Promise.all(APP_SHELL.map(async (path) => {
       try {
         const url = new URL(path, self.registration.scope);
         const response = await fetch(url);
         if (response.ok) await cache.put(url, response);
       } catch {
-        // Retry on a subsequent request when the network is available.
+        // Retry on a later request if the network is unavailable during install.
       }
     }));
     await self.skipWaiting();

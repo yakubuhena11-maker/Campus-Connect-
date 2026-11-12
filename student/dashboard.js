@@ -1,6 +1,7 @@
 import { supabase, isSupabaseConfigured } from '../src/js/supabase-client.js';
 
 const nameElement = document.querySelector('#student-name');
+const headerNameElement = document.querySelector('#header-student-name');
 const avatarElement = document.querySelector('#student-avatar');
 const statusElement = document.querySelector('#dashboard-status');
 const logoutButton = document.querySelector('#logout-button');
@@ -27,9 +28,11 @@ async function initializeDashboard() {
       return;
     }
 
-    const fullName = session.user.user_metadata?.full_name?.trim();
-    nameElement.textContent = fullName || 'student';
-    avatarElement.textContent = getInitials(fullName || 'student');
+    const fullName = session.user.user_metadata?.full_name?.trim() || 'student';
+    nameElement.textContent = fullName;
+    headerNameElement.textContent = fullName;
+    avatarElement.textContent = getInitials(fullName);
+    avatarElement.setAttribute('aria-label', `${getInitials(fullName)} profile initials`);
   } catch {
     window.location.replace('../auth.html#login');
   }
@@ -54,11 +57,10 @@ document.querySelectorAll('[data-feature]').forEach((feature) => {
   });
 });
 
-const mobileNav = document.querySelector('.mobile-bottom-nav');
-mobileNav?.querySelectorAll('a').forEach((link) => {
+const dashboardLinks = [...document.querySelectorAll('[data-dashboard-link]')];
+dashboardLinks.forEach((link) => {
   link.addEventListener('click', () => {
-    mobileNav.querySelectorAll('.mobile-nav-item').forEach((item) => item.classList.remove('is-active'));
-    link.classList.add('is-active');
+    dashboardLinks.forEach((item) => item.classList.toggle('is-active', item.dataset.dashboardLink === link.dataset.dashboardLink));
   });
 });
 

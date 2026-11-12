@@ -22,62 +22,79 @@
         </a>
         <div class="student-account">
           <span class="student-avatar" id="student-avatar" aria-label="Student initials">S</span>
+          <span class="student-account-name" id="header-student-name">Student</span>
+        </div>
+        <div class="student-header-actions">
           <button class="button button-outline logout-button" id="logout-button" type="button">Log out</button>
         </div>
       </nav>
     </header>
-    <main id="student-main" class="student-main">
-      <section class="welcome-card" aria-labelledby="welcome-heading">
-        <p class="eyebrow">STUDENT DASHBOARD</p>
-        <h1 id="welcome-heading">Welcome, <span id="student-name">student</span></h1>
-        <p class="welcome-copy">You’re signed in to Campus Connect. Your campus community is just getting started.</p>
-      </section>
 
-      <section class="dashboard-section" id="dashboard-features" aria-labelledby="features-heading">
-        <div class="section-heading">
-          <p class="eyebrow">YOUR CAMPUS, IN ONE PLACE</p>
-          <h2 id="features-heading">What would you like to do?</h2>
-        </div>
-        <div class="feature-grid">
-          <button class="feature-card" type="button" data-feature="Lost and Found">
-            <span class="feature-icon" aria-hidden="true">⌕</span>
-            <span class="feature-title">Lost and Found</span>
-            <span class="feature-description">Find items or share something you found.</span>
-          </button>
-          <button class="feature-card" type="button" data-feature="Student Voice">
-            <span class="feature-icon" aria-hidden="true">✎</span>
-            <span class="feature-title">Student Voice</span>
-            <span class="feature-description">Share ideas and campus feedback.</span>
-          </button>
-          <button class="feature-card" type="button" data-feature="My Reports">
-            <span class="feature-icon" aria-hidden="true">▤</span>
-            <span class="feature-title">My Reports</span>
-            <span class="feature-description">Keep track of your submissions.</span>
-          </button>
-          <button class="feature-card" type="button" data-feature="Notifications">
-            <span class="feature-icon" aria-hidden="true">♧</span>
-            <span class="feature-title">Notifications</span>
-            <span class="feature-description">Stay up to date with your community.</span>
-          </button>
-          <button class="feature-card" type="button" data-feature="Profile">
-            <span class="feature-icon" aria-hidden="true">♙</span>
-            <span class="feature-title">Profile</span>
-            <span class="feature-description">Manage your student information.</span>
-          </button>
-          <button class="feature-card" type="button" data-feature="Settings">
-            <span class="feature-icon" aria-hidden="true">⚙</span>
-            <span class="feature-title">Settings</span>
-            <span class="feature-description">Personalize your Campus Connect experience.</span>
-          </button>
-        </div>
-        <p id="dashboard-status" class="dashboard-status" role="status" aria-live="polite" hidden></p>
-      </section>
-    </main>
+    <div class="student-layout">
+      <aside class="student-sidebar" aria-label="Dashboard menu">
+        <p class="sidebar-label">YOUR CAMPUS</p>
+        <nav class="sidebar-nav" aria-label="Dashboard sections">
+          <a class="sidebar-link is-active" href="#student-main" data-dashboard-link="home"><span aria-hidden="true">⌂</span>Home</a>
+          <a class="sidebar-link" href="#feature-lost-found" data-dashboard-link="lost-found"><span aria-hidden="true">⌕</span>Lost and Found</a>
+          <a class="sidebar-link" href="#feature-student-voice" data-dashboard-link="student-voice"><span aria-hidden="true">✎</span>Student Voice</a>
+          <a class="sidebar-link" href="#feature-profile" data-dashboard-link="profile"><span aria-hidden="true">♙</span>Profile</a>
+        </nav>
+      </aside>
+
+      <main id="student-main" class="student-main">
+        <section class="welcome-card" aria-labelledby="welcome-heading">
+          <p class="eyebrow">STUDENT DASHBOARD</p>
+          <h1 id="welcome-heading">Welcome, <span id="student-name">student</span></h1>
+          <p class="welcome-copy">You’re signed in to Campus Connect. Your campus community is just getting started.</p>
+        </section>
+
+        <section class="dashboard-section" id="dashboard-features" aria-labelledby="features-heading">
+          <div class="dashboard-section-heading">
+            <p class="eyebrow">YOUR CAMPUS, IN ONE PLACE</p>
+            <h2 id="features-heading">What would you like to do?</h2>
+          </div>
+          <div class="feature-grid">
+            <button class="feature-card" id="feature-lost-found" type="button" data-feature="Lost and Found">
+              <span class="feature-icon" aria-hidden="true">⌕</span>
+              <span class="feature-title">Lost and Found</span>
+              <span class="feature-description">Find items or share something you found.</span>
+            </button>
+            <button class="feature-card" id="feature-student-voice" type="button" data-feature="Student Voice">
+              <span class="feature-icon" aria-hidden="true">✎</span>
+              <span class="feature-title">Student Voice</span>
+              <span class="feature-description">Share ideas and campus feedback.</span>
+            </button>
+            <button class="feature-card" id="feature-my-reports" type="button" data-feature="My Reports">
+              <span class="feature-icon" aria-hidden="true">▤</span>
+              <span class="feature-title">My Reports</span>
+              <span class="feature-description">Keep track of your submissions.</span>
+            </button>
+            <button class="feature-card" id="feature-notifications" type="button" data-feature="Notifications">
+              <span class="feature-icon" aria-hidden="true">♧</span>
+              <span class="feature-title">Notifications</span>
+              <span class="feature-description">Stay up to date with your community.</span>
+            </button>
+            <button class="feature-card" id="feature-profile" type="button" data-feature="Profile">
+              <span class="feature-icon" aria-hidden="true">♙</span>
+              <span class="feature-title">Profile</span>
+              <span class="feature-description">Manage your student information.</span>
+            </button>
+            <button class="feature-card" id="feature-settings" type="button" data-feature="Settings">
+              <span class="feature-icon" aria-hidden="true">⚙</span>
+              <span class="feature-title">Settings</span>
+              <span class="feature-description">Personalize your Campus Connect experience.</span>
+            </button>
+          </div>
+          <p id="dashboard-status" class="dashboard-status" role="status" aria-live="polite" hidden></p>
+        </section>
+      </main>
+    </div>
 
     <nav class="mobile-bottom-nav" aria-label="Student dashboard navigation">
-      <a class="mobile-nav-item is-active" href="#student-main"><span aria-hidden="true">⌂</span>Home</a>
-      <a class="mobile-nav-item" href="#dashboard-features"><span aria-hidden="true">▦</span>Explore</a>
-      <button class="mobile-nav-item" type="button" data-feature="Profile"><span aria-hidden="true">♙</span>Profile</button>
+      <a class="mobile-nav-item is-active" href="#student-main" data-dashboard-link="home"><span aria-hidden="true">⌂</span>Home</a>
+      <a class="mobile-nav-item" href="#feature-lost-found" data-dashboard-link="lost-found"><span aria-hidden="true">⌕</span>Lost and Found</a>
+      <a class="mobile-nav-item" href="#feature-student-voice" data-dashboard-link="student-voice"><span aria-hidden="true">✎</span>Student Voice</a>
+      <a class="mobile-nav-item" href="#feature-profile" data-dashboard-link="profile"><span aria-hidden="true">♙</span>Profile</a>
     </nav>
   </body>
 </html>

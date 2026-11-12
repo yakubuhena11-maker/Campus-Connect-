@@ -11,15 +11,25 @@ const TYPES = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
 let userId = null;
 
 function showMessage(text, isError = true) {
+  if (!msgEl) { alert(text); return; }
   msgEl.textContent = text || '';
   msgEl.hidden = !text;
   msgEl.style.borderColor = isError ? 'var(--accent-strong)' : 'var(--line)';
   if (text) msgEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
+window.addEventListener('error', (e) => showMessage('Script error: ' + e.message));
+window.addEventListener('unhandledrejection', (e) => showMessage('Error: ' + (e.reason?.message || e.reason)));
+
+if (!form || !msgEl || !submitBtn || !dateEl) {
+  alert('The page is missing an element. Check that lost-found-new.html has the ids lf-form, lf-message, lf-submit and lf-date.');
+}
+
+showMessage('Step 1: script loaded.', false);
+
 async function init() {
   if (!isSupabaseConfigured || !supabase) {
-    window.location.replace('../auth.html#login');
+    showMessage('Supabase is not configured.');
     return;
   }
   const { data: { session } } = await supabase.auth.getSession();
@@ -28,12 +38,16 @@ async function init() {
     return;
   }
   userId = session.user.id;
-  dateEl.max = new Date().toISOString().slice(0, 10);
+  if (dateEl) dateEl.max = new Date().toISOString().slice(0, 10);
+  showMessage('Step 2: logged in. Fill in the form and tap Submit.', false);
 }
 
-form.addEventListener('submit', async (event) => {
+submitBtn?.addEventListener('click', () => showMessage('Step 3: Submit tapped.', false));
+
+form?.addEventListener('submit', async (event) => {
   event.preventDefault();
-  showMessage('');
+
+  if (!userId) return showMessage('Still loading your account. Wait a moment and try again.');
 
   const fd = new FormData(form);
   const type = fd.get('type');

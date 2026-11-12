@@ -34,6 +34,7 @@
         <nav class="admin-nav" aria-label="Dashboard sections">
           <button class="nav-item is-active" data-view="overview" type="button"><span aria-hidden="true">⌂</span>Overview</button>
           <button class="nav-item" data-view="users" type="button"><span aria-hidden="true">♙</span>Users</button>
+          <button class="nav-item" data-view="lost-found" type="button"><span aria-hidden="true">⌕</span>Lost and Found</button>
           <button class="nav-item" data-view="audit" type="button"><span aria-hidden="true">◷</span>Audit log</button>
         </nav>
       </aside>
@@ -101,6 +102,27 @@
           </section>
         </section>
 
+        <section class="admin-view" id="view-lost-found" aria-labelledby="lost-found-heading" hidden>
+          <div class="section-heading">
+            <div><p class="eyebrow">COMMUNITY MODERATION</p><h2 id="lost-found-heading">Lost and Found</h2></div>
+            <button class="button button-outline" id="refresh-lost-found" type="button">Refresh</button>
+          </div>
+          <section class="lost-found-section" aria-labelledby="pending-items-heading">
+            <div class="section-heading lost-found-subheading">
+              <div><h3 id="pending-items-heading">Pending items</h3></div>
+              <span class="result-count">Review reports before publishing</span>
+            </div>
+            <div class="lost-found-list" id="pending-items-list" aria-live="polite"><p class="loading">Loading pending items…</p></div>
+          </section>
+          <section class="lost-found-section" aria-labelledby="pending-claims-heading">
+            <div class="section-heading lost-found-subheading">
+              <div><h3 id="pending-claims-heading">Claims</h3></div>
+              <span class="result-count">Pending claim requests</span>
+            </div>
+            <div class="lost-found-list" id="pending-claims-list" aria-live="polite"><p class="loading">Loading claims…</p></div>
+          </section>
+        </section>
+
         <section class="admin-view" id="view-audit" aria-labelledby="audit-heading" hidden>
           <div class="section-heading">
             <div><p class="eyebrow">ACCOUNTABILITY</p><h2 id="audit-heading">Audit log</h2></div>
@@ -114,6 +136,7 @@
     <nav class="mobile-nav" aria-label="Admin dashboard sections">
       <button class="is-active" data-view="overview" type="button"><span aria-hidden="true">⌂</span>Overview</button>
       <button data-view="users" type="button"><span aria-hidden="true">♙</span>Users</button>
+      <button data-view="lost-found" type="button"><span aria-hidden="true">⌕</span>Lost and Found</button>
       <button data-view="audit" type="button"><span aria-hidden="true">◷</span>Audit log</button>
     </nav>
   </body>

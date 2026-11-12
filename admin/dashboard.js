@@ -4,8 +4,7 @@ const $ = (selector) => document.querySelector(selector);
 const notice = $('#admin-notice');
 const navButtons = [...document.querySelectorAll('[data-view]')];
 const views = [...document.querySelectorAll('.admin-view')];
-const state = { admin: null, profiles: [], selectedUser: null };
-const statuses = ['active', 'muted', 'suspended'];
+const state = { admin: null, profiles: [], selectedUser: null, saving: false };
 
 function showNotice(message, type = 'info') {
   notice.textContent = message;
@@ -31,7 +30,11 @@ function setView(view) {
     section.classList.toggle('is-visible', active);
     section.hidden = !active;
   });
-  navButtons.forEach((button) => button.classList.toggle('is-active', button.dataset.view === selected));
+  navButtons.forEach((button) => {
+    const active = button.dataset.view === selected;
+    button.classList.toggle('is-active', active);
+    button.setAttribute('aria-current', active ? 'page' : 'false');
+  });
   $('#page-title').textContent = selected === 'audit' ? 'Audit log' : selected[0].toUpperCase() + selected.slice(1);
   if (selected === 'overview') loadOverview();
   if (selected === 'users') loadUsers();
@@ -193,12 +196,22 @@ async function writeAudit(action, targetUserId, details) {
   if (error) throw new Error(`Profile updated, but audit logging failed: ${error.message}`);
 }
 
+function setActionPending(pending) {
+  state.saving = pending;
+  $('#profile-form button[type="submit"]').disabled = pending;
+  $('#save-role').disabled = pending || state.selectedUser?.id === state.admin.id;
+  $('#account-actions').querySelectorAll('button').forEach((button) => {
+    button.disabled = pending || state.selectedUser?.id === state.admin.id;
+  });
+}
+
 async function updateUser(user, changes, action) {
-  if (!user || (user.id === state.admin.id && ('role' in changes || 'status' in changes))) return;
+  if (!user || state.saving || (user.id === state.admin.id && ('role' in changes || 'status' in changes))) return;
   const label = action.replaceAll('_', ' ');
   if (!window.confirm(`Confirm ${label} for ${user.full_name || user.email || 'this user'}?`)) return;
 
   const before = Object.fromEntries(Object.keys(changes).map((key) => [key, user[key]]));
+  setActionPending(true);
   try {
     const { error } = await supabase.from('profiles').update(changes).eq('id', user.id);
     if (error) throw error;
@@ -206,10 +219,11 @@ async function updateUser(user, changes, action) {
     showNotice('Change saved and recorded in the audit log.');
     $('#user-detail').hidden = true;
     state.selectedUser = null;
-    await Promise.all([loadUsers(), loadOverview()]);
-    if ($('#view-audit').classList.contains('is-visible')) await loadAudit();
+    await Promise.all([loadUsers(), loadOverview(), loadAudit()]);
   } catch (error) {
     showNotice(error.message || 'Could not save this change.', 'error');
+  } finally {
+    setActionPending(false);
   }
 }
 
@@ -262,7 +276,7 @@ async function loadAudit() {
   }
   list.innerHTML = data.map((entry) => `
     <article class="audit-row">
-      <strong>${escapeHTML(entry.action.replaceAll('_', ' '))}</strong>
+      <strong>${escapeHTML((entry.action || 'action').replaceAll('_', ' '))}</strong>
       <p>Admin ${escapeHTML(entry.admin_id || 'unknown')} · Target ${escapeHTML(entry.target_user_id || 'none')}</p>
       <p>${escapeHTML(JSON.stringify(entry.details || {}))}</p>
       <time datetime="${escapeHTML(entry.created_at)}">${escapeHTML(formatDate(entry.created_at))}</time>

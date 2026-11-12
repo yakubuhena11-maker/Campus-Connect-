@@ -3,4 +3,4 @@
 // protected by Row Level Security policies. Never put a service_role key here.
 // Replace with values from your Supabase project's API settings before connecting.
 export const SUPABASE_URL = 'https://nnkdjfqhsvdjkndvpolm.supabase.co/rest/v1/';
-export const SUPABASE_ANON_KEY = '';
+export const SUPABASE_ANON_KEY = 'sb_publishable_EXgKfqIWOoWBRZZ2mhYmKg_FhywVu-A';

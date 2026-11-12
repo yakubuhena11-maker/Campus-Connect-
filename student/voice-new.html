@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#123b70" />
+    <meta name="description" content="Share your idea with the campus community." />
+    <title>Share your voice — Campus Connect</title>
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <link rel="stylesheet" href="../src/css/styles.css" />
+    <link rel="stylesheet" href="voice-new.css" />
+    <script type="module" src="../src/js/theme.js"></script>
+    <script type="module" src="voice-new.js"></script>
+  </head>
+  <body class="voice-page">
+    <a class="skip-link" href="#voice-main">Skip to form</a>
+    <header class="site-header"><nav class="nav voice-nav" aria-label="Main navigation">
+      <a class="brand" href="dashboard.html" aria-label="Campus Connect dashboard"><span class="brand-mark" aria-hidden="true">CC</span><span>campus<span class="brand-light">connect</span></span></a>
+      <a class="button button-outline" href="voice.html">Back to Student Voice</a>
+    </nav></header>
+    <main id="voice-main" class="voice-shell">
+      <div class="voice-form-heading"><p class="eyebrow">STUDENT VOICE</p><h1>Share your idea</h1><p>Your feedback helps make campus better. Your post will be visible to signed-in students.</p></div>
+      <p class="voice-message" id="voice-message" role="status" aria-live="polite" hidden></p>
+      <form class="voice-form" id="voice-form" novalidate>
+        <label>Category<select name="category" required><option value="" disabled selected>Select a category</option><option value="suggestion">Suggestion</option><option value="problem">Problem</option><option value="complaint">Complaint</option></select></label>
+        <label>Title <span class="voice-limit">Up to 120 characters</span><input name="title" type="text" maxlength="120" minlength="5" required placeholder="Give your post a clear title" /></label>
+        <label>Message <span class="voice-limit">20–2,000 characters</span><textarea name="message" rows="8" maxlength="2000" minlength="20" required placeholder="Tell us more about your idea or feedback"></textarea></label>
+        <label class="voice-switch-row" for="anonymous"><span><strong>Post anonymously</strong><small>Your name won’t be shown with this post.</small></span><input id="anonymous" name="is_anonymous" type="checkbox" role="switch" /></label>
+        <div class="voice-form-actions"><a class="button button-outline" href="voice.html">Cancel</a><button class="button button-primary" type="submit" id="submit-post">Post to Student Voice</button></div>
+      </form>
+    </main>
+  </body>
+</html>

@@ -61,6 +61,10 @@ logoutButton.addEventListener('click', async () => {
 
 document.querySelectorAll('[data-feature]').forEach((feature) => {
   feature.addEventListener('click', () => {
+    if (feature.id === 'feature-student-voice') {
+      window.location.href = 'voice.html';
+      return;
+    }
     showStatus(`${feature.dataset.feature} — Coming soon.`);
   });
 });

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#123b70" />
+    <meta name="description" content="Read a Student Voice post and its updates." />
+    <title>Student Voice post — Campus Connect</title>
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <link rel="stylesheet" href="../src/css/styles.css" />
+    <link rel="stylesheet" href="voice-post.css" />
+    <script type="module" src="../src/js/theme.js"></script>
+    <script type="module" src="voice-post.js"></script>
+  </head>
+  <body class="voice-page">
+    <a class="skip-link" href="#voice-main">Skip to post</a>
+    <header class="site-header"><nav class="nav voice-nav" aria-label="Main navigation">
+      <a class="brand" href="dashboard.html" aria-label="Campus Connect dashboard"><span class="brand-mark" aria-hidden="true">CC</span><span>campus<span class="brand-light">connect</span></span></a>
+      <a class="button button-outline" href="voice.html">All posts</a>
+    </nav></header>
+    <main id="voice-main" class="voice-shell">
+      <a class="voice-back" href="voice.html">← Back to Student Voice</a>
+      <p class="voice-message" id="voice-message" role="status" aria-live="polite" hidden></p>
+      <article id="post-content" class="post-content" aria-live="polite"><div class="voice-empty">Loading post…</div></article>
+      <section class="post-section" aria-labelledby="timeline-title"><h2 id="timeline-title">Status updates</h2><ol class="voice-timeline" id="voice-timeline"></ol></section>
+      <section class="post-section" aria-labelledby="replies-title"><h2 id="replies-title">Campus team replies</h2><div class="voice-replies" id="voice-replies"></div></section>
+    </main>
+  </body>
+</html>

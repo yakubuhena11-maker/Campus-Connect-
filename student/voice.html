@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#123b70" />
+    <meta name="description" content="Share campus ideas and follow student feedback." />
+    <title>Student Voice — Campus Connect</title>
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <link rel="stylesheet" href="../src/css/styles.css" />
+    <link rel="stylesheet" href="voice.css" />
+    <script type="module" src="../src/js/theme.js"></script>
+    <script type="module" src="voice.js"></script>
+  </head>
+  <body class="voice-page">
+    <a class="skip-link" href="#voice-main">Skip to Student Voice</a>
+    <header class="site-header"><nav class="nav voice-nav" aria-label="Main navigation">
+      <a class="brand" href="../student/dashboard.html" aria-label="Campus Connect dashboard"><span class="brand-mark" aria-hidden="true">CC</span><span>campus<span class="brand-light">connect</span></span></a>
+      <a class="button button-outline" href="dashboard.html">Dashboard</a>
+    </nav></header>
+    <main id="voice-main" class="voice-shell">
+      <section class="voice-heading" aria-labelledby="voice-title">
+        <p class="eyebrow">YOUR CAMPUS, YOUR VOICE</p>
+        <div class="voice-heading-row"><div><h1 id="voice-title">Student Voice</h1><p>Share an idea, support a post, and see what’s changing on campus.</p></div><a class="button button-primary" href="voice-new.html">＋ Share an idea</a></div>
+      </section>
+      <p class="voice-message" id="voice-message" role="status" aria-live="polite" hidden></p>
+      <div class="voice-tabs" role="tablist" aria-label="Post list">
+        <button class="voice-tab is-active" id="tab-community" type="button" role="tab" aria-selected="true">Community</button>
+        <button class="voice-tab" id="tab-mine" type="button" role="tab" aria-selected="false">My posts</button>
+      </div>
+      <section class="voice-filters" aria-label="Filter posts">
+        <label class="voice-search">Search posts<input id="voice-search" type="search" placeholder="Search ideas…" autocomplete="off" /></label>
+        <label>Category<select id="category-filter"><option value="">All categories</option><option value="complaint">Complaint</option><option value="problem">Problem</option><option value="suggestion">Suggestion</option></select></label>
+        <label>Status<select id="status-filter"><option value="">All statuses</option><option value="received">Received</option><option value="reviewing">Under review</option><option value="resolved">Resolved</option></select></label>
+      </section>
+      <section id="voice-feed" class="voice-feed" aria-label="Student Voice posts" aria-live="polite"></section>
+    </main>
+  </body>
+</html>

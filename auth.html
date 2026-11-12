@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#123c35" />
+    <meta name="description" content="Create your Campus Connect student account or log in." />
+    <title>Log in — Campus Connect</title>
+    <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="src/css/styles.css" />
+    <link rel="stylesheet" href="src/css/auth.css" />
+    <script type="module" src="src/js/app.js"></script>
+    <script type="module" src="src/js/auth.js"></script>
+  </head>
+  <body class="auth-page">
+    <a class="skip-link" href="#auth-content">Skip to authentication form</a>
+    <header class="site-header"><nav class="nav shell" aria-label="Main navigation">
+      <a class="brand" href="index.html" aria-label="Campus Connect home"><span class="brand-mark" aria-hidden="true">CC</span><span>campus<span class="brand-light">connect</span></span></a>
+      <a class="text-link" href="index.html">← Back to home</a>
+    </nav></header>
+    <main id="auth-content" class="auth-layout shell">
+      <section class="auth-intro"><p class="eyebrow"><span class="eyebrow-dot"></span> YOUR CAMPUS, ONE COMMUNITY</p><h1>Your next chapter starts <span>here.</span></h1><p>Connect with your campus community. Create an account with your university email to get started.</p><div class="auth-stamp" aria-hidden="true">CC<br /><span>YOUR CAMPUS<br />COMMUNITY</span></div></section>
+      <section class="auth-card" aria-label="Student account access">
+        <div class="auth-tabs" aria-label="Authentication options">
+          <a href="#login" data-auth-mode="login">Log in</a>
+          <a href="#signup" data-auth-mode="signup">Create account</a>
+        </div>
+        <div id="auth-status" class="auth-status" role="status" aria-live="polite" hidden></div>
+
+        <section data-auth-panel="signup">
+          <p class="eyebrow">JOIN YOUR COMMUNITY</p><h2>Create your account</h2><p class="form-intro">Use your university details to register.</p>
+          <form id="signup-form" novalidate>
+            <label for="signup-name">Full name</label><input id="signup-name" name="fullName" type="text" autocomplete="name" minlength="3" maxlength="100" placeholder="e.g. Alex Morgan" required />
+            <label for="signup-matric">Matriculation number</label><input id="signup-matric" name="matriculationNumber" type="text" autocomplete="off" minlength="3" maxlength="30" placeholder="e.g. 2025/12345" required />
+            <label for="signup-email">University email</label><input id="signup-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@university.edu" required />
+            <div class="field-row"><div><label for="signup-password">Password</label><input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="8" required aria-describedby="password-help" /><small id="password-help">At least 8 characters.</small></div><div><label for="signup-confirm">Confirm password</label><input id="signup-confirm" name="confirmPassword" type="password" autocomplete="new-password" required /></div></div>
+            <button class="button button-primary auth-submit" type="submit">Create account <span aria-hidden="true">→</span></button>
+          </form>
+          <p class="auth-switch">Already have an account? <a href="#login" data-auth-mode="login">Log in</a></p>
+        </section>
+
+        <section data-auth-panel="login" hidden>
+          <p class="eyebrow">WELCOME BACK</p><h2>Log in to Campus Connect</h2><p class="form-intro">Pick up where campus life left off.</p>
+          <form id="login-form">
+            <label for="login-email">University email</label><input id="login-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@university.edu" required />
+            <label for="login-password">Password</label><input id="login-password" name="password" type="password" autocomplete="current-password" required />
+            <a class="forgot-link" href="#recovery" data-auth-mode="recovery">Forgot password?</a>
+            <button class="button button-primary auth-submit" type="submit">Log in <span aria-hidden="true">→</span></button>
+          </form>
+          <p class="auth-switch">New to Campus Connect? <a href="#signup" data-auth-mode="signup">Create an account</a></p>
+        </section>
+
+        <section data-auth-panel="recovery" hidden>
+          <p class="eyebrow">ACCOUNT RECOVERY</p><h2>Reset your password</h2><p class="form-intro">Enter your university email and we’ll request a recovery link.</p>
+          <form id="recovery-form">
+            <label for="recovery-email">University email</label><input id="recovery-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@university.edu" required />
+            <button class="button button-primary auth-submit" type="submit">Send recovery email <span aria-hidden="true">→</span></button>
+          </form>
+          <p class="auth-switch"><a href="#login" data-auth-mode="login">← Back to log in</a></p>
+        </section>
+        <p class="auth-disclaimer">Authentication requests use Supabase Auth. This starter is not yet verified against the live project.</p>
+      </section>
+    </main>
+    <footer class="site-footer shell"><a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">CC</span><span>campus<span class="brand-light">connect</span></span></a><p>Built for campus life. <span>© <span id="current-year">2026</span> Campus Connect</span></p></footer>
+  </body>
+</html>

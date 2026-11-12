@@ -30,8 +30,8 @@ if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
   });
 }
 
-// Supabase wiring is intentionally not initialized until project credentials are configured.
+// Configuration presence only; this does not verify connectivity or authentication.
 export const isSupabaseConfigured = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
 if (!isSupabaseConfigured) {
-  console.info('Supabase is not configured yet. Add your project URL and publishable anon key in src/js/supabase-config.js.');
+  console.info('Supabase is not configured yet. Add the project URL and publishable anon key in src/js/supabase-config.js.');
 }

@@ -1,11 +1,15 @@
-const CACHE_NAME = 'campus-connect-v1';
+const CACHE_NAME = 'campus-connect-v2';
 const APP_SHELL = [
   './',
   './index.html',
+  './auth.html',
   './manifest.webmanifest',
   './src/css/styles.css',
+  './src/css/auth.css',
   './src/js/app.js',
+  './src/js/auth.js',
   './src/js/supabase-config.js',
+  './src/js/supabase-client.js',
   './assets/icons/icon.svg'
 ];
 

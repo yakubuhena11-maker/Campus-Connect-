@@ -30,3 +30,11 @@
   .voice-form-actions .button { width: auto; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+.voice-visibility { display: grid; gap: 10px; margin: 0; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+.voice-visibility legend { padding: 0 6px; color: var(--primary); font-weight: 700; }
+.voice-visibility-option { display: flex; align-items: flex-start; gap: 12px; min-height: 44px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; }
+.voice-visibility-option:has(input:checked) { border-color: var(--accent-strong); background: var(--accent-soft); }
+.voice-visibility-option input { width: 22px; height: 22px; margin-top: 2px; flex: 0 0 auto; }
+.voice-visibility-option span { display: grid; gap: 3px; }
+.voice-visibility-option strong { color: var(--primary); }
+.voice-visibility-option small { color: var(--muted); line-height: 1.4; }

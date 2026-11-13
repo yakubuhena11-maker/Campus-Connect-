@@ -1,14 +1,15 @@
-const CACHE_NAME = 'campus-connect-v19';
+const CACHE_NAME = 'campus-connect-v20';
 const APP_SHELL = [
-  './', './index.html', './auth.html',
+  './', './index.html', './auth.html', './reset-password.html',
   './student/dashboard.html', './student/dashboard.css', './student/dashboard.js',
   './student/voice.html', './student/voice.css', './student/voice.js',
   './student/voice-new.html', './student/voice-new.css', './student/voice-new.js',
   './student/voice-post.html', './student/voice-post.css', './student/voice-post.js',
   './student/lost-found.html', './student/lost-found.css', './student/lost-found.js',
   './student/lost-found-new.html', './student/lost-found-new.css', './student/lost-found-new.js',
+  './student/lost-found-item.html', './student/lost-found-item.css', './student/lost-found-item.js',
   './admin/dashboard.html', './admin/dashboard.css', './admin/dashboard.js', './admin/dashboard-notice.js',
-  './admin/voice-admin.css', './admin/voice-admin.js',
+  './admin/voice-admin.css', './admin/voice-admin.js', './admin/lost-found-actions.js',
   './manifest.webmanifest', './src/css/styles.css', './src/css/auth.css',
   './src/js/app.js', './src/js/theme.js', './src/js/auth.js',
   './src/js/supabase-config.js', './src/js/supabase-client.js', './assets/icons/icon.svg'
@@ -20,10 +21,10 @@ self.addEventListener('install', (event) => {
     await Promise.all(APP_SHELL.map(async (path) => {
       try {
         const url = new URL(path, self.registration.scope);
-        const response = await fetch(url);
+        const response = await fetch(url, { cache: 'reload' });
         if (response.ok) await cache.put(url, response);
       } catch {
-        // Retry on a later request if the network is unavailable during install.
+        // Missing files are skipped; they are cached when first visited.
       }
     }));
     await self.skipWaiting();
@@ -36,35 +37,33 @@ self.addEventListener('activate', (event) => {
     .then(() => self.clients.claim()));
 });
 
+// Network-first for everything: always load the newest files when online,
+// and fall back to the cache only when offline.
 self.addEventListener('fetch', (event) => {
   const request = event.request;
-  if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
-
   const url = new URL(request.url);
-  if (/\.(?:css|js)$/i.test(url.pathname)) {
-    // Network-first: refresh app code when available, with a cached offline fallback.
-    event.respondWith((async () => {
-      try {
-        const response = await fetch(request);
-        if (response.ok) {
-          const cache = await caches.open(CACHE_NAME);
-          await cache.put(request, response.clone());
-        }
-        return response;
-      } catch {
-        const cached = await caches.match(request);
-        return cached || new Response('Asset unavailable while offline.', {
-          status: 503, statusText: 'Service Unavailable',
-          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-        });
-      }
-    })());
-    return;
-  }
+  if (request.method !== 'GET' || url.origin !== self.location.origin) return;
 
   event.respondWith((async () => {
-    const cached = await caches.match(request);
-    if (cached) return cached;
-    return fetch(request);
+    try {
+      const response = await fetch(request, { cache: 'no-cache' });
+      if (response.ok && response.status === 200) {
+        const cache = await caches.open(CACHE_NAME);
+        await cache.put(request, response.clone());
+      }
+      return response;
+    } catch {
+      const cached = await caches.match(request, { ignoreSearch: true });
+      if (cached) return cached;
+      if (request.mode === 'navigate') {
+        const fallback = await caches.match(new URL('./index.html', self.registration.scope));
+        if (fallback) return fallback;
+      }
+      return new Response('You are offline.', {
+        status: 503,
+        statusText: 'Service Unavailable',
+        headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+      });
+    }
   })());
 });

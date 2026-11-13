@@ -26,6 +26,17 @@
         <label>Title <span class="voice-limit">Up to 120 characters</span><input name="title" type="text" maxlength="120" minlength="5" required placeholder="Give your post a clear title" /></label>
         <label>Message <span class="voice-limit">20–2,000 characters</span><textarea name="message" rows="8" maxlength="2000" minlength="20" required placeholder="Tell us more about your idea or feedback"></textarea></label>
         <label class="voice-switch-row" for="anonymous"><span><strong>Post anonymously</strong><small>Your name won’t be shown with this post.</small></span><input id="anonymous" name="is_anonymous" type="checkbox" role="switch" /></label>
+<fieldset class="voice-visibility">
+  <legend>Who can see this post?</legend>
+  <label class="voice-visibility-option" for="visibility-public">
+    <input id="visibility-public" name="visibility" type="radio" value="public" checked />
+    <span><strong>Public</strong><small>All signed-in students can see it and upvote it.</small></span>
+  </label>
+  <label class="voice-visibility-option" for="visibility-private">
+    <input id="visibility-private" name="visibility" type="radio" value="private" />
+    <span><strong>Private</strong><small>Only you and the admins can see it. Admins can see who sent it.</small></span>
+  </label>
+</fieldset>
         <div class="voice-form-actions"><a class="button button-outline" href="voice.html">Cancel</a><button class="button button-primary" type="submit" id="submit-post">Post to Student Voice</button></div>
       </form>
     </main>

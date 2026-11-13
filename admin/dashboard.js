@@ -545,8 +545,22 @@ $('#logout-button').addEventListener('click', async (event) => {
   window.location.replace('../auth.html');
 });
 
-if (await requireAdmin()) {
-  await Promise.all([loadOverview(), loadAudit()]);
-  setView('overview');
+function withTimeout(promise, ms, label) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error(`${label} took too long. Close other tabs of this site, check your connection, then reload.`)), ms))
+  ]);
+}
+
+try {
+  showNotice('Checking admin access…');
+  const ok = await withTimeout(requireAdmin(), 15000, 'The admin check');
+  if (ok) {
+    notice.hidden = true;
+    await Promise.all([loadOverview(), loadAudit()]);
+    setView('overview');
+  }
+} catch (error) {
+  showNotice(error.message || 'Could not start the admin panel.', 'error');
 }
 import './lost-found-actions.js';
